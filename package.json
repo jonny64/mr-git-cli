@@ -1,0 +1,34 @@
+{
+  "name": "@jonny64/mr",
+  "version": "0.0.1",
+  "description": "yet another git flow cli",
+  "main": "mr.js",
+  "directories": {
+    "test": "tests"
+  },
+  "bin": {
+    "mr": "mr.js"
+  },
+  "scripts": {
+    "version": "",
+    "preversion": "npm run test",
+    "pretest": "exit 0 && npm ci",
+    "test": "node --test --experimental-test-coverage",
+    "postversion": "exit 0 && git push && git push --tags && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonny64/mr.git"
+  },
+  "keywords": [
+    "git",
+    "cli",
+    "gitlab"
+  ],
+  "author": "jonny64",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonny64/mr/issues"
+  },
+  "homepage": "https://github.com/jonny64/mr#readme"
+}
