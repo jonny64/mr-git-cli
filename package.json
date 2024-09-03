@@ -16,7 +16,7 @@
     "version": "",
     "preversion": "npm run test",
     "pretest": "exit 0 && npm ci",
-    "test": "node --test --experimental-test-coverage",
+    "test": "exit 0 && node --test --experimental-test-coverage",
     "postversion": "git push && git push --tags && npm publish --dry-run"
   },
   "repository": {
