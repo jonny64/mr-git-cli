@@ -1,5 +1,5 @@
 {
-  "name": "node-mr",
+  "name": "deploy-mr",
   "version": "0.0.1",
   "description": "yet another git flow cli",
   "main": "mr.js",
@@ -16,12 +16,12 @@
     "version": "",
     "preversion": "npm run test",
     "pretest": "exit 0 && npm ci",
-    "test": "exit 0 && node --test --experimental-test-coverage",
+    "test": "node --test --experimental-test-coverage tests/*.js",
     "postversion": "git push && git push --tags && npm publish --dry-run"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonny64/node-mr.git"
+    "url": "git+https://github.com/jonny64/deploy-mr.git"
   },
   "keywords": [
     "git",
@@ -31,7 +31,7 @@
   "author": "jonny64",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jonny64/node-mr/issues"
+    "url": "https://github.com/jonny64/deploy-mr/issues"
   },
-  "homepage": "https://github.com/jonny64/node-mr#readme"
+  "homepage": "https://github.com/jonny64/deploy-mr#readme"
 }
