@@ -9,7 +9,7 @@ describe('random input', () => {
 			case 'git switch --guess --create TASK-42':
 				return `Switched to a new branch 'TASK-42'`
 			default:
-				throw `A branch named 'TASK-42' already exists`
+				throw `Command failed: git switch --guess 'TASK-42'\nfatal: invalid reference: 'TASK-42'`
 		}
 
 	})
