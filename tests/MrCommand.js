@@ -19,6 +19,6 @@ describe('random input', () => {
 	})
 
 	it ('switch', async (t) => {
-		assert.strictEqual(await (new MrCommand ({src: 'TASK-42', dst: 'master'}).run ()), `Switched to a new branch 'TASK-42'`)
+		assert.strictEqual(await (new MrCommand ({src: 'TASK-42'}).run ()), `Switched to a new branch 'TASK-42'`)
 	})
 })
