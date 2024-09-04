@@ -1,6 +1,6 @@
 {
   "name": "deploy-mr",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "yet another git flow cli",
   "main": "mr.js",
   "publishConfig": {
@@ -15,9 +15,8 @@
   "scripts": {
     "version": "",
     "preversion": "npm run test",
-    "pretest": "exit 0 && npm ci",
     "test": "node --test --experimental-test-coverage tests/*.js",
-    "postversion": "git push && git push --tags && npm publish --dry-run"
+    "postversion": "git push && npm publish --dry-run"
   },
   "repository": {
     "type": "git",
