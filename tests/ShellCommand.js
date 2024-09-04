@@ -1,6 +1,5 @@
 const {describe, it, mock} = require ('node:test')
 const assert = require ('assert')
-const fs = require ('fs')
 const ShellCommand = require ('../lib/ShellCommand')
 
 
