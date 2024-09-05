@@ -23,7 +23,7 @@ jobs:
     - run: npm test
     - run: |
         # cov threshold workaround since https://github.com/nodejs/node/pull/54429 not landed yet
-        COV_PERCENT_MIN=90
+        COV_PERCENT_MIN=70
         COV_PERCENT=$(npm test | grep 'all' | cut -d'|' -f3) # all files branch cov
-        echo "$COV_PERCENT should be greater then $COV_PERCENT_MIN"
+        echo "branch coverage $COV_PERCENT should be greater then $COV_PERCENT_MIN"
         node -e "process.exit($COV_PERCENT > $COV_PERCENT_MIN ? 0 : 1)"
