@@ -1,7 +1,8 @@
 const {describe, it, mock} = require ('node:test')
 const assert = require ('assert')
 const ShellCommand = require ('../lib/ShellCommand')
-const Git = require ('../lib/Git')
+const GitRepo = require ('../lib/GitRepo')
+const GitBranch = require ('../lib/GitBranch')
 const MrCommand = require ('../lib/MrCommand')
 
 describe('random input', () => {
@@ -16,8 +17,8 @@ describe('random input', () => {
 
 	})
 
-	mock.method(Git.prototype, 'currentBranch', function () {
-		return 'TASK-42'
+	mock.method(GitRepo.prototype, 'currentBranch', function () {
+		return new GitBranch ({ name: 'TASK-42' })
 	})
 
 	it ('empty arguments', async (t) => {
