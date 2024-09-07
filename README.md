@@ -1,1 +1,1 @@
-https://github.com/jonny64/deploy-mr/wiki
+https://github.com/jonny64/mr-git-cli/wiki

@@ -1,5 +1,5 @@
 {
-  "name": "deploy-mr",
+  "name": "mr-git-cli",
   "version": "0.0.5",
   "description": "yet another git flow cli",
   "main": "mr.js",
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jonny64/deploy-mr.git"
+    "url": "git+https://github.com/jonny64/mr-git-cli.git"
   },
   "keywords": [
     "git",
@@ -30,7 +30,7 @@
   "author": "jonny64",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jonny64/deploy-mr/issues"
+    "url": "https://github.com/jonny64/mr-git-cli/issues"
   },
-  "homepage": "https://github.com/jonny64/deploy-mr#readme"
+  "homepage": "https://github.com/jonny64/mr-git-cli#readme"
 }
