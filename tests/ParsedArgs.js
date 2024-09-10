@@ -8,6 +8,9 @@ describe('ParsedArgs', () => {
 	it ('2 args not valid', async (t) => {
 		assert.throws(() => await (new ParsedArgs (toArgv (`TASK-42 from`)).value ()))
 	})
+	it ('2 args create not valid', async (t) => {
+		assert.throws(() => await (new ParsedArgs (toArgv (`TASK-42 origin/release`)).value ()))
+	})
 	it ('push branch', async (t) => {
 		assert.deepStrictEqual(await new ParsedArgs ([]).value (), {dst: '', action: 'push', src: ''})
 	})
