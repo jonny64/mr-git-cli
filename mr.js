@@ -1,11 +1,14 @@
 #! /usr/bin/env node
-const [_, __, src, dst] = process.argv
-
+const ParsedArgs = require('./lib/ParsedArgs')
 const MrCommand = require('./lib/MrCommand')
 
 ; (async () => {
 	try {
-		await (new MrCommand({src, dst})).run ()
+		await (new MrCommand(
+			new ParsedArgs (
+				process.argv.slice (2)
+			)
+		)).run ()
 	} catch (x) {
 		console.log (x)
 		return '' + x
