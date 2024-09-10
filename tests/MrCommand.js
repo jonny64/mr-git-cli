@@ -8,11 +8,11 @@ const MrCommand = require ('../lib/MrCommand')
 describe('random input', () => {
     mock.method(ShellCommand.prototype, 'run', function () {
 		switch (this.cmd) {
-			case 'git switch --guess TASK-42':
-			case 'git switch --guess --create TASK-42':
+			case 'git switch --merge --guess TASK-42':
+			case 'git switch --merge --guess --create TASK-42':
 				return `Switched to a new branch 'TASK-42'`
 			default:
-				throw `Command failed: git switch --guess 'TASK-42'\nfatal: invalid reference: 'TASK-42'`
+				throw `Command failed: git switch --merge --guess 'TASK-42'\nfatal: invalid reference: 'TASK-42'`
 		}
 
 	})
@@ -26,6 +26,6 @@ describe('random input', () => {
 	})
 
 	it ('switch', async (t) => {
-		assert.strictEqual(await (new MrCommand ({src: 'TASK-42'}).run ()), `Switched to a new branch 'TASK-42'`)
+		assert.strictEqual(await (new MrCommand ({dst: 'TASK-42', action: 'switch', src: ''}).run ()), `Switched to a new branch 'TASK-42'`)
 	})
 })
