@@ -4,6 +4,7 @@ const ShellCommand = require ('../lib/ShellCommand')
 const GitRepo = require ('../lib/GitRepo')
 const GitBranch = require ('../lib/GitBranch')
 const MrCommand = require ('../lib/MrCommand')
+const ParsedArgs = require ('../lib/ParsedArgs')
 
 describe('random input', () => {
     mock.method(ShellCommand.prototype, 'run', function () {
@@ -21,11 +22,13 @@ describe('random input', () => {
 		return new GitBranch ({ name: 'TASK-42' })
 	})
 
-	it ('empty arguments', async (t) => {
-		assert.throws(() => await (new MrCommand ({}).run ()))
+	it ('push on empty arguments', async (t) => {
+		const parsedArgs = new ParsedArgs ([])
+		assert.ok(() => await (new MrCommand (parsedArgs).run ()))
 	})
 
 	it ('switch', async (t) => {
-		assert.strictEqual(await (new MrCommand ({dst: 'TASK-42', action: 'switch', src: ''}).run ()), `Switched to a new branch 'TASK-42'`)
+		const parsedArgs = new ParsedArgs (['TASK-42'])
+		assert.strictEqual(await (new MrCommand (parsedArgs).run ()), `Switched to a new branch 'TASK-42'`)
 	})
 })

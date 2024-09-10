@@ -4,8 +4,11 @@ const MrCommand = require('./lib/MrCommand')
 
 ; (async () => {
 	try {
-		const o = await new ParsedArgs (process.argv).value ()
-		await (new MrCommand(o)).run ()
+		await (new MrCommand(
+			new ParsedArgs (
+				process.argv.slice (2)
+			)
+		)).run ()
 	} catch (x) {
 		console.log (x)
 		return '' + x

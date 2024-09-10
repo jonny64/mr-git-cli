@@ -4,7 +4,7 @@ const ParsedArgs = require ('../lib/ParsedArgs')
 
 
 describe('ParsedArgs', () => {
-	const toArgv = s => ['_', '__'].concat (s.split (/\s+/))
+	const toArgv = s => s.split (/\s+/)
 	it ('2 args not valid', async (t) => {
 		assert.throws(() => await (new ParsedArgs (toArgv (`TASK-42 from`)).value ()))
 	})
