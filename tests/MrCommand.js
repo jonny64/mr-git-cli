@@ -18,17 +18,41 @@ describe('random input', () => {
 
 	})
 
+	mock.method(GitBranch.prototype, 'isOriginGitlab', function () {
+		return false
+	})
+
 	mock.method(GitRepo.prototype, 'currentBranch', function () {
-		return new GitBranch ({ name: 'TASK-42' })
+		return new GitBranch ({ name: 'TASK-42', origin: 'gitlab' })
+	})
+
+	mock.method(GitRepo.prototype, 'defaultBranch', function () {
+		return new GitBranch ({ name: 'main', origin: 'gitlab' })
 	})
 
 	it ('push on empty arguments', async (t) => {
 		const parsedArgs = new ParsedArgs ([])
-		assert.ok(() => await (new MrCommand (parsedArgs).run ()))
+		const todo = await new MrCommand (parsedArgs, new GitRepo ()).todo()
+		assert.deepStrictEqual(todo, {
+			todo: [
+				{todo: 'push origin TASK-42:TASK-42'}
+			]
+		})
 	})
 
 	it ('switch', async (t) => {
 		const parsedArgs = new ParsedArgs (['TASK-42'])
-		assert.strictEqual(await (new MrCommand (parsedArgs).run ()), `Switched to a new branch 'TASK-42'`)
+		const todo = await new MrCommand (parsedArgs, new GitRepo ()).todo()
+		assert.deepStrictEqual(todo, {
+			fail: 'fallback',
+			todo: [
+				{todo: 'switch --merge --guess TASK-42'},
+				{
+					confirm: "Create new branch 'TASK-42' from 'gitlab/main' [Y/n]? ",
+					todo: 'switch --guess --merge --create TASK-42 gitlab/main'
+				},
+			]
+		})
 	})
+
 })
