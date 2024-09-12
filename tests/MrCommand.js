@@ -46,6 +46,7 @@ describe('random input', () => {
 		assert.deepStrictEqual(todo, {
 			fail: 'fallback',
 			todo: [
+				{todo: 'fetch'},
 				{todo: 'switch --merge --guess TASK-42'},
 				{
 					confirm: "Create new branch 'TASK-42' from 'gitlab/main' [Y/n]? ",
