@@ -12,15 +12,15 @@ describe('ParsedArgs', () => {
 		assert.throws(() => await (new ParsedArgs (toArgv (`TASK-42 origin/release`)).value ()))
 	})
 	it ('push branch', async (t) => {
-		assert.deepStrictEqual(await new ParsedArgs ([]).value (), {dst: '', action: 'push', src: ''})
+		assert.deepStrictEqual(await new ParsedArgs ([]).value (), {dst: '', action: 'Push', src: ''})
 	})
 	it ('switch to branch', async (t) => {
-		assert.deepStrictEqual(await new ParsedArgs (toArgv (`TASK-42`)).value (), {dst: 'TASK-42', action: 'switch', src: ''})
+		assert.deepStrictEqual(await new ParsedArgs (toArgv (`TASK-42`)).value (), {dst: 'TASK-42', action: 'Switch', src: ''})
 	})
 	it ('create from release', async (t) => {
-		assert.deepStrictEqual(await new ParsedArgs (toArgv (`TASK-42 from release`)).value (), {dst: 'TASK-42', action: 'create', src: 'release'})
+		assert.deepStrictEqual(await new ParsedArgs (toArgv (`TASK-42 from release`)).value (), {dst: 'TASK-42', action: 'Create', src: 'release'})
 	})
 	it ('deploy to release', async (t) => {
-		assert.deepStrictEqual(await new ParsedArgs (toArgv (`TASK-42 to release`)).value (), {src: 'TASK-42', action: 'merge', dst: 'release'})
+		assert.deepStrictEqual(await new ParsedArgs (toArgv (`TASK-42 to release`)).value (), {src: 'TASK-42', action: 'Merge', dst: 'release'})
 	})
 })
