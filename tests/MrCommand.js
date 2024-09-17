@@ -9,7 +9,7 @@ const Push = require ('../lib/PushCommand')
 const Switch = require ('../lib/SwitchCommand')
 
 describe('random input', () => {
-    mock.method(ShellCommand.prototype, 'run', function () {
+	mock.method(ShellCommand.prototype, 'run', function () {
 		switch (this.cmd) {
 			case 'git switch --merge --guess TASK-42':
 			case 'git switch --merge --guess --create TASK-42':
@@ -39,7 +39,7 @@ describe('random input', () => {
 		const todo = await new MrCommand ({parsedArgs, gitRepo, commands}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
-				{todo: 'push -u origin TASK-42:TASK-42'}
+				{todo: 'push --set-upstream origin TASK-42:TASK-42'}
 			]
 		})
 	})
