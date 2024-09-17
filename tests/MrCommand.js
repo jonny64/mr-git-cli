@@ -9,7 +9,7 @@ const Push = require ('../lib/PushCommand')
 const Switch = require ('../lib/SwitchCommand')
 
 describe('random input', () => {
-    mock.method(ShellCommand.prototype, 'run', function () {
+	mock.method(ShellCommand.prototype, 'run', function () {
 		switch (this.cmd) {
 			case 'git switch --merge --guess TASK-42':
 			case 'git switch --merge --guess --create TASK-42':
