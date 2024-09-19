@@ -24,7 +24,7 @@ const Merge  = require('./lib/MergeCommand')
 			await new MrCommand({parsedArgs, gitRepo, commands}).todo ()
 		).run ()
 	} catch (x) {
-		console.log (x)
+		console.log (new Error (x).message)
 		return '' + x
 	}
 })()
