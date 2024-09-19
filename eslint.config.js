@@ -1,18 +1,26 @@
-const globals = require ("globals")
-const pluginJs = require ("@eslint/js")
-const pluginNoFloatingPromise = require ("eslint-plugin-no-floating-promise")
+const globals = require("globals");
+const pluginJs = require("@eslint/js");
+const pluginNoFloatingPromise = require("eslint-plugin-no-floating-promise");
+const pluginSonarjs = require("eslint-plugin-sonarjs");
 
-module.exports = [
-  {files: ["**/*.js"], languageOptions: {sourceType: "commonjs"}},
-  {languageOptions: { globals: globals.node}},
-  pluginJs.configs.recommended,
-  {
+module.exports = [{
+	files: ["**/*.js"],
+	languageOptions: {
+		sourceType: "commonjs",
+		globals: globals.node,
+	},
 	plugins: {
-		"no-floating-promise": pluginNoFloatingPromise
+		"no-floating-promise": pluginNoFloatingPromise,
+		sonarjs: pluginSonarjs,
 	},
 	rules: {
+		...pluginJs.configs.recommended.rules,
+		...pluginSonarjs.configs.recommended.rules,
 		"no-unused-vars": "off",
-		"no-floating-promise/no-floating-promise": "error"
+		"sonarjs/sonar-no-unused-vars": "off",
+		"sonarjs/sonar-no-fallthrough": "off",
+
+		"no-floating-promise/no-floating-promise": "error",
+		"sonarjs/cognitive-complexity": ["error", 15],
 	},
-  }
-];
+}];

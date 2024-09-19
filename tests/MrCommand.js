@@ -15,7 +15,7 @@ describe('random input', () => {
 			case 'git switch --merge --guess --create TASK-42':
 				return `Switched to a new branch 'TASK-42'`
 			default:
-				throw `Command failed: git switch --merge --guess 'TASK-42'\nfatal: invalid reference: 'TASK-42'`
+				throw new Error (`Command failed: git switch --merge --guess 'TASK-42'\nfatal: invalid reference: 'TASK-42'`)
 		}
 
 	})

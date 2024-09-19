@@ -13,7 +13,7 @@ describe('random input', () => {
 			case 'git log --oneline origin/TASK-42..origin/main':
 				return `2a2dc99fda316150633352bc05691b855d433b65 commit msg\n84cbc4c680e92ddcee3ef7523afb17b658f8b39fcommit msg`
 			default:
-				throw `Command failed: git log --oneline origin/TASK-42..origin/main\nfatal: invalid reference: 'TASK-42'`
+				throw new Error (`Command failed: git log --oneline origin/TASK-42..origin/main\nfatal: invalid reference: 'TASK-42'`)
 		}
 
 	})
