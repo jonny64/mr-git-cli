@@ -1,9 +1,8 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import pluginNoFloatingPromise from "eslint-plugin-no-floating-promise";
+const globals = require ("globals")
+const pluginJs = require ("@eslint/js")
+const pluginNoFloatingPromise = require ("eslint-plugin-no-floating-promise")
 
-
-export default [
+module.exports = [
   {files: ["**/*.js"], languageOptions: {sourceType: "commonjs"}},
   {languageOptions: { globals: globals.node}},
   pluginJs.configs.recommended,
