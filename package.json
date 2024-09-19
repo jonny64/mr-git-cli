@@ -15,6 +15,7 @@
   "scripts": {
     "version": "",
     "preversion": "npm run test",
+    "pretest": "npx eslint .",
     "test": "node --test --experimental-test-coverage tests/*.js",
     "postversion": "git push && npm publish --dry-run"
   },
@@ -32,5 +33,11 @@
   "bugs": {
     "url": "https://github.com/jonny64/mr-git-cli/issues"
   },
-  "homepage": "https://github.com/jonny64/mr-git-cli#readme"
+  "homepage": "https://github.com/jonny64/mr-git-cli#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.10.0",
+    "eslint": "^9.10.0",
+    "eslint-plugin-no-floating-promise": "^2.0.0",
+    "globals": "^15.9.0"
+  }
 }

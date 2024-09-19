@@ -7,6 +7,7 @@ const Push  = require('./lib/PushCommand')
 const Switch  = require('./lib/SwitchCommand')
 const Merge  = require('./lib/MergeCommand')
 
+// eslint-disable-next-line no-floating-promise/no-floating-promise
 ; (async () => {
 	try {
 		const gitRepo = new GitRepo ()
