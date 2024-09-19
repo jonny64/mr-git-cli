@@ -20,6 +20,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
+    - run: npm ci
     - run: npm test
     - run: |
         # cov threshold workaround since https://github.com/nodejs/node/pull/54429 not landed yet
