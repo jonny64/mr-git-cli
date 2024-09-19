@@ -1,6 +1,6 @@
 {
   "name": "mr-git-cli",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "yet another git flow cli",
   "main": "mr.js",
   "publishConfig": {
