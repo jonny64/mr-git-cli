@@ -22,9 +22,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm test
+    # @todo #0:1h use --test-coverage-exclude to exclude tests from cov
+    # when https://github.com/nodejs/node/pull/53553 is landed and node 18 EOL
+    # @todo #0:1h use --test-coverage-branches
+    # when https://github.com/nodejs/node/pull/54429 is landed and node 18 EOL
     - run: |
-        # cov threshold workaround since https://github.com/nodejs/node/pull/54429 not landed yet
-        COV_PERCENT_MIN=70
+        COV_PERCENT_MIN=90
         COV_PERCENT=$(npm test | grep 'all' | cut -d'|' -f3) # all files branch cov
         echo "branch coverage $COV_PERCENT should be greater then $COV_PERCENT_MIN"
         node -e "process.exit($COV_PERCENT > $COV_PERCENT_MIN ? 0 : 1)"
