@@ -2,7 +2,7 @@ const {describe, it, mock} = require ('node:test')
 const assert = require ('assert')
 const GitBranch = require ('../lib/GitBranch')
 
-
+// @todo #0:1h improve file coverage at least funcs % 70
 describe('git branch equals', () => {
 	let task42 = new GitBranch ({name: 'TASK-42', origin: 'origin'})
 	let task43 = new GitBranch ({name: 'TASK-43', origin: 'origin'})
