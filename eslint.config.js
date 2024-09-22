@@ -3,7 +3,6 @@ const pluginJs = require("@eslint/js");
 const pluginNoFloatingPromise = require("eslint-plugin-no-floating-promise");
 const pluginSonarjs = require("eslint-plugin-sonarjs");
 
-// @todo #0:1h fix npx eslint . cause 'Warning: React version not specified in eslint-plugin-react settings.'
 module.exports = [{
 	files: ["**/*.js"],
 	languageOptions: {
