@@ -21,6 +21,7 @@ module.exports = [{
 		"sonarjs/sonar-no-unused-vars": "off",
 		"sonarjs/sonar-no-fallthrough": "off",
 		"sonarjs/todo-tag": "off",
+		"sonarjs/aws-restricted-ip-admin-access": "off",
 
 		"no-floating-promise/no-floating-promise": "error",
 		"sonarjs/cognitive-complexity": ["error", 15],

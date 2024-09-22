@@ -38,9 +38,7 @@
     "@eslint/js": "^9.10.0",
     "eslint": "^9.10.0",
     "eslint-plugin-no-floating-promise": "^2.0.0",
+    "eslint-plugin-sonarjs": "^2.0.2",
     "globals": "^15.9.0"
-  },
-  "dependencies": {
-    "eslint-plugin-sonarjs": "^2.0.2"
   }
 }
