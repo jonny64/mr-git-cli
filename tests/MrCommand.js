@@ -9,16 +9,22 @@ const Push = require ('../lib/PushCommand')
 const Switch = require ('../lib/SwitchCommand')
 
 describe('random input', () => {
-	mock.method(ShellCommand.prototype, 'run', function () {
+	let f = function () {
 		switch (this.cmd) {
 			case 'git switch --merge --guess TASK-42':
 			case 'git switch --merge --guess --create TASK-42':
 				return `Switched to a new branch 'TASK-42'`
+			case 'git branch --list TASK-42':
+				return `e46431c45f3c46d87c22cf63d70db2f4435bd89b refs/heads/TASK-42`
+			case 'git branch --list TASK-43':
+				return ``
 			default:
 				throw new Error (`Command failed: git switch --merge --guess 'TASK-42'\nfatal: invalid reference: 'TASK-42'`)
 		}
 
-	})
+	}
+	mock.method(ShellCommand.prototype, 'run', f)
+	mock.method(ShellCommand.prototype, 'runSilent', f)
 
 	mock.method(GitBranch.prototype, 'isOriginGitlab', function () {
 		return false
@@ -44,7 +50,7 @@ describe('random input', () => {
 		})
 	})
 
-	it ('switch', async (t) => {
+	it ('switch branch exists', async (t) => {
 		const parsedArgs = new ParsedArgs (['TASK-42'])
 		const gitRepo = new GitRepo ()
 		const commands = {Switch}
@@ -52,15 +58,24 @@ describe('random input', () => {
 		assert.deepStrictEqual(todo, {
 			todo: [
 				{todo: 'fetch'},
-				{
-					todo: `switch --merge --guess TASK-42`,
-					fail: {
-						todo: `switch --guess --merge --create TASK-42 gitlab/main`,
-						confirm: `Create new branch 'TASK-42' from 'gitlab/main' [Y/n]? `,
-					}
-				},
+				{todo: `switch --merge --guess TASK-42`},
 			]
 		})
 	})
 
+	it ('switch create branch when not exists', async (t) => {
+		const parsedArgs = new ParsedArgs (['TASK-43'])
+		const gitRepo = new GitRepo ()
+		const commands = {Switch}
+		const todo = await new MrCommand ({parsedArgs, gitRepo, commands}).todo()
+		assert.deepStrictEqual(todo, {
+			todo: [
+				{todo: 'fetch'},
+				{
+					todo: 'switch --guess --merge --create TASK-43 gitlab/main',
+					confirm: "Create new branch 'TASK-43' from 'gitlab/main' [Y/n]? ",
+				}
+			]
+		})
+	})
 })
