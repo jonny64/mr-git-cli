@@ -13,8 +13,9 @@ $ mr TASK-42
 $ git commit -m "TASK-42 this is first commit message of branch"
 
 $ mr TASK-42 to test
-> git push --set-upstream origin TASK-42:TASK-42 -o merge_request.create
-  -o merge_request.title='TASK-42 this is first commit message of branch' -o merge_request.target=master
+> git push --set-upstream origin TASK-42:TASK-42
+  -o merge_request.create -o merge_request.target=master
+  -o merge_request.title='TASK-42 this is first commit message of branch' 
 remote: View merge request for TASK-42:
 remote:   https://gitlab.company.local/jonny64/mr-git-cli/-/merge_requests/1
  * [new branch]      TASK-42 -> TASK-42
