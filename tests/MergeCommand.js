@@ -8,10 +8,14 @@ const ParsedArgs = require ('../lib/ParsedArgs')
 
 describe('MergeCommand', () => {
 	let f = function () {
-		// eslint-disable-next-line sonarjs/no-small-switch
 		switch (this.cmd) {
 			case "git config mr.master.mergeAfter --default ''":
 				return [GitBranch.withName ('test')]
+			case "git push --set-upstream origin TASK-42:TASK-42":
+			case "git push --set-upstream origin TASK-0:TASK-0":
+			case "git push --set-upstream origin TASK-9:TASK-9":
+			case "git push --set-upstream origin dummy:dummy":
+				return "pushed"
 			default:
 				throw new Error (`Unknown command: ${this.cmd}`)
 		}
@@ -22,6 +26,10 @@ describe('MergeCommand', () => {
 
 	mock.method(GitBranch.prototype, 'isOriginGitlab', function () {
 		return false
+	})
+
+	mock.method(GitBranch.prototype, 'current', function () {
+		return true
 	})
 
 	mock.method(GitRepo.prototype, 'currentBranch', function () {
@@ -35,12 +43,25 @@ describe('MergeCommand', () => {
 	mock.method(GitRepo.prototype, 'existInRemote', function () {
 		return true
 	})
-	mock.method(GitRepo.prototype, 'countDiffCommits', function () {
+	mock.method(GitRepo.prototype, 'countDiffCommits', async function (src, dst) {
+		if (await src.equals (GitBranch.withName ('TASK-0'))) {
+			return 0
+		}
+		if (await src.equals (GitBranch.withName ('TASK-9'))) {
+			return 101
+		}
 		return 1
 	})
 
-	mock.method(GitRepo.prototype, 'toMergeAfter', function () {
-		return [GitBranch.withName ('test')]
+	mock.method(GitRepo.prototype, 'existInRemote', async function (dst) {
+		return !await dst.equals (GitBranch.withName ('dummy'))
+	})
+
+	mock.method(GitRepo.prototype, 'toMergeAfter', async function (dst) {
+		if (await dst.equals (GitBranch.withName ('master'))) {
+			return [GitBranch.withName ('test')]
+		}
+		return []
 	})
 
 	it ('master mergeAfter test', async (t) => {
@@ -59,6 +80,46 @@ describe('MergeCommand', () => {
 				{ todo: 'reset --hard origin/master' },
 				{ todo: 'merge origin/TASK-42' },
 				{ todo: 'push --set-upstream origin master:master' }
+			]
+		})
+	})
+
+	it ('dst missing branch', async (t) => {
+		const parsedArgs = new ParsedArgs (['TASK-42', 'to', 'dummy'])
+		const gitRepo = new GitRepo ()
+		const todo = await new MergeCommand ({parsedArgs, gitRepo}).todo()
+		assert.deepStrictEqual(todo, {
+			todo: [
+			]
+		})
+	})
+
+	it ('src missing branch', async (t) => {
+		const parsedArgs = new ParsedArgs (['dummy', 'to', 'master'])
+		const gitRepo = new GitRepo ()
+		const todo = await new MergeCommand ({parsedArgs, gitRepo}).todo()
+		assert.deepStrictEqual(todo, {
+			todo: [
+			]
+		})
+	})
+
+	it ('src fully merged branch', async (t) => {
+		const parsedArgs = new ParsedArgs (['TASK-0', 'to', 'master'])
+		const gitRepo = new GitRepo ()
+		const todo = await new MergeCommand ({parsedArgs, gitRepo}).todo()
+		assert.deepStrictEqual(todo, {
+			todo: [
+			]
+		})
+	})
+
+	it ('src diverged branch', async (t) => {
+		const parsedArgs = new ParsedArgs (['TASK-9', 'to', 'master'])
+		const gitRepo = new GitRepo ()
+		const todo = await new MergeCommand ({parsedArgs, gitRepo}).todo()
+		assert.deepStrictEqual(todo, {
+			todo: [
 			]
 		})
 	})
