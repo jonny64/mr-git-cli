@@ -45,7 +45,7 @@ describe('random input', () => {
 		const todo = await new MrCommand ({parsedArgs, gitRepo, commands}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
-				{todo: 'push --set-upstream origin TASK-42:TASK-42'}
+				{todo: 'push --set-upstream gitlab TASK-42:TASK-42'}
 			]
 		})
 	})
