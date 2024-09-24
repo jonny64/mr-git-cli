@@ -20,6 +20,7 @@ const Merge  = require('./lib/MergeCommand')
 			Switch,
 			Create: Switch,
 			Merge,
+			// @todo #0:1h add help --version with usage examples
 		}
 		await new RunCommand (
 			await new MrCommand({parsedArgs, gitRepo, commands}).todo ()
