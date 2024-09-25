@@ -16,6 +16,10 @@ describe('MergeCommand', () => {
 			case "git push --set-upstream origin TASK-9:TASK-9":
 			case "git push --set-upstream origin dummy:dummy":
 				return "pushed"
+			case "git config --default '' --get mr.test":
+				return "npm test"
+			case "npm test":
+				return "OK"
 			default:
 				throw new Error (`Unknown command: ${this.cmd}`)
 		}
@@ -59,7 +63,7 @@ describe('MergeCommand', () => {
 
 	mock.method(GitRepo.prototype, 'toMergeAfter', async function (dst) {
 		if (await dst.equals (GitBranch.withName ('master'))) {
-			return [GitBranch.withName ('test')]
+			return [GitBranch.withName ('test', this)]
 		}
 		return []
 	})
@@ -70,16 +74,18 @@ describe('MergeCommand', () => {
 		const todo = await new MergeCommand ({parsedArgs, gitRepo}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
-				{ todo: 'fetch' },
-				{ todo: 'checkout test' },
-				{ todo: 'reset --hard origin/test' },
-				{ todo: 'merge origin/TASK-42' },
-				{ todo: 'push --set-upstream origin test:test' },
-				{ todo: 'fetch' },
-				{ todo: 'checkout master' },
-				{ todo: 'reset --hard origin/master' },
-				{ todo: 'merge origin/TASK-42' },
-				{ todo: 'push --set-upstream origin master:master' }
+				'git fetch',
+				'git checkout test',
+				'git reset --hard origin/test',
+				'git merge origin/TASK-42',
+				'npm test',
+				'git push --set-upstream origin test:test',
+				'git fetch',
+				'git checkout master',
+				'git reset --hard origin/master',
+				'git merge origin/TASK-42',
+				'npm test',
+				'git push --set-upstream origin master:master'
 			]
 		})
 	})

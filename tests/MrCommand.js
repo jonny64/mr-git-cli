@@ -18,8 +18,10 @@ describe('random input', () => {
 				return `e46431c45f3c46d87c22cf63d70db2f4435bd89b refs/heads/TASK-42`
 			case 'git branch --list TASK-43':
 				return ``
+			case "git config --default '' --get mr.test":
+				return ``
 			default:
-				throw new Error (`Command failed: git switch --merge --guess 'TASK-42'\nfatal: invalid reference: 'TASK-42'`)
+				throw new Error (`Unknow command: ${this.cmd}`)
 		}
 
 	}
@@ -31,7 +33,7 @@ describe('random input', () => {
 	})
 
 	mock.method(GitRepo.prototype, 'currentBranch', function () {
-		return new GitBranch ({ name: 'TASK-42', origin: 'gitlab' })
+		return new GitBranch ({ name: 'TASK-42', origin: 'gitlab', gitRepo: this })
 	})
 
 	mock.method(GitRepo.prototype, 'defaultBranch', function () {
@@ -45,7 +47,7 @@ describe('random input', () => {
 		const todo = await new MrCommand ({parsedArgs, gitRepo, commands}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
-				{todo: 'push --set-upstream gitlab TASK-42:TASK-42'}
+				'git push --set-upstream gitlab TASK-42:TASK-42'
 			]
 		})
 	})
@@ -57,8 +59,8 @@ describe('random input', () => {
 		const todo = await new MrCommand ({parsedArgs, gitRepo, commands}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
-				{todo: 'fetch'},
-				{todo: `switch --merge --guess TASK-42`},
+				'git fetch',
+				'git switch --merge --guess TASK-42',
 			]
 		})
 	})
@@ -70,9 +72,9 @@ describe('random input', () => {
 		const todo = await new MrCommand ({parsedArgs, gitRepo, commands}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
-				{todo: 'fetch'},
+				'git fetch',
 				{
-					todo: 'switch --guess --merge --create TASK-43 gitlab/main',
+					todo: 'git switch --guess --merge --create TASK-43 gitlab/main',
 					confirm: "Create new branch 'TASK-43' from 'gitlab/main' [Y/n]? ",
 				}
 			]
