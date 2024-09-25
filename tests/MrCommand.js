@@ -21,7 +21,6 @@ describe('random input', () => {
 			case "git config --default '' --get mr.test":
 				return ``
 			default:
-				//throw new Error (`Command failed: git switch --merge --guess 'TASK-42'\nfatal: invalid reference: 'TASK-42'`)
 				throw new Error (`Unknow command: ${this.cmd}`)
 		}
 
