@@ -85,7 +85,8 @@ describe('MergeCommand', () => {
 				'git reset --hard origin/master',
 				'git merge origin/TASK-42',
 				'npm test',
-				'git push --set-upstream origin master:master'
+				'git push --set-upstream origin master:master',
+				'git checkout TASK-42',
 			]
 		})
 	})
