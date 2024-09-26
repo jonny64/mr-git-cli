@@ -1,7 +1,7 @@
 `mr` is a small `git` wrapper for console geeks; let's see it in action:
 ```
 $ mr TASK-42 from origin/release
-Create new branch 'TASK-4444' from 'origin/release' [Y/n]?
+Create new branch 'TASK-4444' from 'origin/release' [Y/n]? y
  > git fetch
  > git switch --guess --merge --create TASK-4444 origin/release
 Switched to a new branch 'TASK-4444'
@@ -19,9 +19,15 @@ $ mr TASK-42 to test
 remote: View merge request for TASK-42:
 remote:   https://gitlab.local/jonny64/mr-git-cli/-/merge_requests/1
  * [new branch]      TASK-42 -> TASK-42
-> git switch master
+> git switch test
 > git merge origin/TASK-42
-> npm test [#TBD]
+> npm test
+> git push
+
+$ mr TASK-42 to release
+> git switch release
+> git merge origin/TASK-42
+> npm test
 > git push
 ```
 see https://github.com/jonny64/mr-git-cli/wiki for details
