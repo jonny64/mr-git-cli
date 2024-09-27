@@ -78,7 +78,8 @@ describe('random input', () => {
 				{
 					todo: 'git switch --guess --merge --create TASK-43 gitlab/main',
 					confirm: "Create new branch 'TASK-43' from 'gitlab/main' [Y/n]? ",
-				}
+				},
+				`git config branch.TASK-43.mr-target gitlab/main`
 			]
 		})
 	})
