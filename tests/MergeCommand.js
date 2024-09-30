@@ -9,14 +9,14 @@ const ParsedArgs = require ('../lib/ParsedArgs')
 describe('MergeCommand', () => {
 	let f = function () {
 		switch (this.cmd) {
-			case "git config mr.master.mergeAfter --default ''":
+			case "git config mr.master.mergeAfter":
 				return [GitBranch.withName ('test')]
 			case "git push --set-upstream origin TASK-42:TASK-42":
 			case "git push --set-upstream origin TASK-0:TASK-0":
 			case "git push --set-upstream origin TASK-9:TASK-9":
 			case "git push --set-upstream origin dummy:dummy":
 				return "pushed"
-			case "git config --default '' --get mr.test":
+			case "git config mr.test":
 				return "npm test"
 			case "npm test":
 				return "OK"

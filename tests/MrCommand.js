@@ -3,6 +3,7 @@ const assert = require ('assert')
 const ShellCommand = require ('../lib/ShellCommand')
 const GitRepo = require ('../lib/GitRepo')
 const GitBranch = require ('../lib/GitBranch')
+const OldGit = require ('../lib/OldGit')
 const MrCommand = require ('../lib/MrCommand')
 const ParsedArgs = require ('../lib/ParsedArgs')
 const Push = require ('../lib/PushCommand')
@@ -19,7 +20,7 @@ describe('random input', () => {
 				return `e46431c45f3c46d87c22cf63d70db2f4435bd89b refs/heads/TASK-42`
 			case 'git branch --list TASK-43':
 				return ``
-			case "git config --default '' --get mr.test":
+			case "git config mr.test":
 				return ``
 			default:
 				throw new Error (`Unknow command: ${this.cmd}`)
@@ -41,11 +42,16 @@ describe('random input', () => {
 		return new GitBranch ({ name: 'main', origin: 'gitlab' })
 	})
 
+	mock.method(OldGit.prototype, 'translate', function (o) {
+		return o
+	})
+
 	it ('push on empty arguments', async (t) => {
 		const parsedArgs = new ParsedArgs ([])
 		const gitRepo = new GitRepo ()
 		const commands = {Push: new Push ({gitRepo, parsedArgs})}
-		const todo = await new MrCommand ({parsedArgs, gitRepo, commands}).todo()
+		const oldGit = new OldGit ()
+		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, oldGit}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
 				'git push --set-upstream gitlab TASK-42:TASK-42'
@@ -57,11 +63,12 @@ describe('random input', () => {
 		const parsedArgs = new ParsedArgs (['TASK-42'])
 		const gitRepo = new GitRepo ()
 		const commands = {Switch: new Switch ({gitRepo, parsedArgs})}
-		const todo = await new MrCommand ({parsedArgs, gitRepo, commands}).todo()
+		const oldGit = new OldGit ()
+		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, oldGit}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
 				'git fetch',
-				'git switch --merge --guess TASK-42',
+				'git switch --guess --merge TASK-42',
 			]
 		})
 	})
@@ -70,15 +77,14 @@ describe('random input', () => {
 		const parsedArgs = new ParsedArgs (['TASK-43'])
 		const gitRepo = new GitRepo ()
 		const createCommand = new Create ({gitRepo, parsedArgs})
+		const oldGit = new OldGit ()
 		const commands = {Switch: new Switch ({gitRepo, parsedArgs, createCommand})}
-		const todo = await new MrCommand ({parsedArgs, gitRepo, commands}).todo()
+		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, oldGit}).todo()
 		assert.deepStrictEqual(todo, {
+			confirmLabel: `Create new branch 'TASK-43' from 'gitlab/main' [Y/n]? `,
 			todo: [
 				'git fetch',
-				{
-					todo: 'git switch --guess --merge --create TASK-43 gitlab/main',
-					confirm: "Create new branch 'TASK-43' from 'gitlab/main' [Y/n]? ",
-				},
+				'git switch --guess --merge --create TASK-43 gitlab/main',
 				`git config branch.TASK-43.mr-target gitlab/main`
 			]
 		})
