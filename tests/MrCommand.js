@@ -46,11 +46,12 @@ describe('random input', () => {
 		return o
 	})
 
+	const gitRepo = new GitRepo ()
+	const oldGit = new OldGit ({gitRepo})
+
 	it ('push on empty arguments', async (t) => {
 		const parsedArgs = new ParsedArgs ([])
-		const gitRepo = new GitRepo ()
 		const commands = {Push: new Push ({gitRepo, parsedArgs})}
-		const oldGit = new OldGit ()
 		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, oldGit}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
@@ -61,9 +62,7 @@ describe('random input', () => {
 
 	it ('switch branch exists', async (t) => {
 		const parsedArgs = new ParsedArgs (['TASK-42'])
-		const gitRepo = new GitRepo ()
 		const commands = {Switch: new Switch ({gitRepo, parsedArgs})}
-		const oldGit = new OldGit ()
 		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, oldGit}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
@@ -75,9 +74,7 @@ describe('random input', () => {
 
 	it ('switch create branch when not exists', async (t) => {
 		const parsedArgs = new ParsedArgs (['TASK-43'])
-		const gitRepo = new GitRepo ()
 		const createCommand = new Create ({gitRepo, parsedArgs})
-		const oldGit = new OldGit ()
 		const commands = {Switch: new Switch ({gitRepo, parsedArgs, createCommand})}
 		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, oldGit}).todo()
 		assert.deepStrictEqual(todo, {
