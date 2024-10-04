@@ -3,5 +3,5 @@
 	"extends": [
 		"config:recommended"
 	],
-	"ignore": ["eslint-plugin-sonarjs"]
+	"ignoreDeps": ["eslint-plugin-sonarjs"]
 }
