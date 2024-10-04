@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  test_call:
     uses: ./.github/workflows/test.yml
-  build:
-    needs: test
+  publish:
+    needs: test_call
     runs-on: ubuntu-latest
     permissions:
       contents: read
