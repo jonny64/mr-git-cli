@@ -18,8 +18,8 @@ describe('random input', () => {
 				return `Switched to a new branch 'TASK-42'`
 			case 'git branch --list TASK-42':
 				return `e46431c45f3c46d87c22cf63d70db2f4435bd89b refs/heads/TASK-42`
-			case 'git branch --list TASK-43':
-				return ``
+			case 'git branch --list TASK-43': return ''
+			case `git ls-remote --heads origin TASK-43`: return ''
 			case "git config mr.test":
 				return ``
 			default:
