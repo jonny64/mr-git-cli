@@ -3,7 +3,7 @@ const assert = require ('assert')
 const ShellCommand = require ('../lib/ShellCommand')
 const GitRepo = require ('../lib/GitRepo')
 const GitBranch = require ('../lib/GitBranch')
-const OldGit = require ('../lib/OldGit')
+const GitOld = require ('../lib/GitOld')
 const MrCommand = require ('../lib/MrCommand')
 const ParsedArgs = require ('../lib/ParsedArgs')
 const Push = require ('../lib/PushCommand')
@@ -42,17 +42,17 @@ describe('random input', () => {
 		return new GitBranch ({ name: 'main', origin: 'gitlab' })
 	})
 
-	mock.method(OldGit.prototype, 'translate', function (o) {
+	mock.method(GitOld.prototype, 'translate', function (o) {
 		return o
 	})
 
 	const gitRepo = new GitRepo ()
-	const oldGit = new OldGit ({gitRepo})
+	const gitOld = new GitOld ({gitRepo})
 
 	it ('push on empty arguments', async (t) => {
 		const parsedArgs = new ParsedArgs ([])
 		const commands = {Push: new Push ({gitRepo, parsedArgs})}
-		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, oldGit}).todo()
+		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, gitOld}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
 				'git push --set-upstream gitlab TASK-42:TASK-42'
@@ -63,7 +63,7 @@ describe('random input', () => {
 	it ('switch branch exists', async (t) => {
 		const parsedArgs = new ParsedArgs (['TASK-42'])
 		const commands = {Switch: new Switch ({gitRepo, parsedArgs})}
-		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, oldGit}).todo()
+		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, gitOld}).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
 				'git fetch',
@@ -76,7 +76,7 @@ describe('random input', () => {
 		const parsedArgs = new ParsedArgs (['TASK-43'])
 		const createCommand = new Create ({gitRepo, parsedArgs})
 		const commands = {Switch: new Switch ({gitRepo, parsedArgs, createCommand})}
-		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, oldGit}).todo()
+		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, gitOld}).todo()
 		assert.deepStrictEqual(todo, {
 			confirmLabel: `Create new branch 'TASK-43' from 'gitlab/main' [Y/n]? `,
 			todo: [
