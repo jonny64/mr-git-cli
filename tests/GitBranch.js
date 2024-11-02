@@ -40,6 +40,8 @@ mock.method(ShellCommand.prototype, 'runSilent', function () {
 			return `44 fix 'quotes'\n44 other fix 'quotes'`
 		case 'git log --reverse --pretty=format:%s origin/master..EMPTY-45':
 			return ''
+		case 'git log --reverse --pretty=format:%s gitlab/release..r46':
+			return `46 commit msg\n46 other commit msg`
 		case 'git symbolic-ref refs/remotes/origin/HEAD --short':
 			return ORIGIN_MASTER
 		default:
@@ -51,10 +53,12 @@ mock.method(GitRepo.prototype, 'config', function (key) {
 	switch (key) {
 		case 'branch.TASK-42.mr-target': return ORIGIN_MASTER
 		case 'branch.TASK-42.description': return ''
+		case 'branch.r44.description': return ''
 		case 'branch.43.mr-target': return 'gitlab/release'
 		case 'branch.43.description': return ''
 		case 'branch.44.mr-target': return ''
 		case 'branch.EMPTY-45.mr-target': return ''
+		case 'branch.r46.mr-target': return 'gitlab/release'
 		case 'remote.origin.url': return 'git@gitlab.local'
 		default: throw new Error (`Unknown config: ${key}`)
 	}
@@ -68,18 +72,21 @@ describe('git branch mrTitle', () => {
 	let task43 = new GitBranch ({name: '43', origin: 'gitlab', gitRepo})
 	let task44 = new GitBranch ({name: '44', origin: 'gitlab', gitRepo})
 	let task45 = new GitBranch ({name: 'EMPTY-45', origin: 'origin', gitRepo})
+	let task46 = new GitBranch ({name: 'r46', origin: 'origin', gitRepo})
 
 	it ('mrTitle', async (t) => {
 		assert.strictEqual(await task42.mrTitle (), "TASK-42 commit msg", "first commit msg of branch named with prefix")
 		assert.strictEqual(await task43.mrTitle (), "TASK-43 commit msg", "first commit msg of branch named digits only")
 		assert.strictEqual(await task44.mrTitle (), `TASK-44 fix '"'"'quotes'"'"'`, "gitlab push options escape quotes in bash")
 		assert.strictEqual(await task45.mrTitle (), "EMPTY-45", "no commit msg for empty branch")
+		assert.strictEqual(await task46.mrTitle (), "TASK-46 commit msg", "release branch gitlab external issue tracker link")
 	})
 
 	describe ('gitlab push options', () => {
 		let gitRepo = new GitRepo ()
 		let task42 = new GitBranch ({name: 'TASK-42', origin: 'origin', gitRepo})
 		let task43 = new GitBranch ({name: '43', origin: 'gitlab', gitRepo})
+		let taskRelease = new GitBranch ({name: 'r44', origin: 'gitlab', gitRepo})
 
 		it ('noMr', async (t) => {
 			assert.strictEqual(await task42.gitlabPushOptions ({noMr: true}), '')
