@@ -40,8 +40,10 @@ mock.method(ShellCommand.prototype, 'runSilent', function () {
 			return `44 fix 'quotes'\n44 other fix 'quotes'`
 		case 'git log --reverse --pretty=format:%s origin/master..EMPTY-45':
 			return ''
-		case 'git log --reverse --pretty=format:%s gitlab/release..r46':
+		case 'git log --reverse --pretty=format:%s origin/release..r46':
 			return `46 commit msg\n46 other commit msg`
+		case 'git log --reverse --pretty=format:%s origin/master..47':
+			return `warning: refname '47' is ambigous\n47 commit msg\n47 other commit msg`
 		case 'git symbolic-ref refs/remotes/origin/HEAD --short':
 			return ORIGIN_MASTER
 		default:
@@ -58,7 +60,8 @@ mock.method(GitRepo.prototype, 'config', function (key) {
 		case 'branch.43.description': return ''
 		case 'branch.44.mr-target': return ''
 		case 'branch.EMPTY-45.mr-target': return ''
-		case 'branch.r46.mr-target': return 'gitlab/release'
+		case 'branch.r46.mr-target': return 'origin/release'
+		case 'branch.47.mr-target': return ''
 		case 'remote.origin.url': return 'git@gitlab.local'
 		default: throw new Error (`Unknown config: ${key}`)
 	}
@@ -73,6 +76,7 @@ describe('git branch mrTitle', () => {
 	let task44 = new GitBranch ({name: '44', origin: 'gitlab', gitRepo})
 	let task45 = new GitBranch ({name: 'EMPTY-45', origin: 'origin', gitRepo})
 	let task46 = new GitBranch ({name: 'r46', origin: 'origin', gitRepo})
+	let task47 = new GitBranch ({name: '47', origin: 'origin', gitRepo})
 
 	it ('mrTitle', async (t) => {
 		assert.strictEqual(await task42.mrTitle (), "TASK-42 commit msg", "first commit msg of branch named with prefix")
@@ -80,6 +84,7 @@ describe('git branch mrTitle', () => {
 		assert.strictEqual(await task44.mrTitle (), `TASK-44 fix '"'"'quotes'"'"'`, "gitlab push options escape quotes in bash")
 		assert.strictEqual(await task45.mrTitle (), "EMPTY-45", "no commit msg for empty branch")
 		assert.strictEqual(await task46.mrTitle (), "TASK-46 commit msg", "release branch gitlab external issue tracker link")
+		assert.strictEqual(await task47.mrTitle (), "TASK-47 commit msg", "first commit msg of branch ambigous with some other commit")
 	})
 
 	describe ('gitlab push options', () => {
