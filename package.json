@@ -16,8 +16,7 @@
     "version": "",
     "preversion": "npm run test",
     "pretest": "npx eslint .",
-    "test": "node --test --experimental-test-coverage tests/*.js",
-    "postversion": "git push && npm publish --dry-run"
+    "test": "node --test --experimental-test-coverage tests/*.js"
   },
   "repository": {
     "type": "git",
