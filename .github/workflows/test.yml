@@ -35,7 +35,7 @@ jobs:
   semgrep:
     name: semgrep
     runs-on: ubuntu-latest
-    container: returntocorp
+    container: returntocorp/semgrep:latest
     permissions:
       packages: read
     steps:
