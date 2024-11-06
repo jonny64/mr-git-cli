@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
 
 jobs:
+  test_call:
+    uses: ./.github/workflows/test.yml
   publish:
     needs: test_call
     runs-on: ubuntu-latest
