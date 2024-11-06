@@ -11,16 +11,12 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x]
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 18
     - run: npm ci
     - run: npm test
     # @todo #0:1h use --test-coverage-exclude to exclude tests from cov
@@ -33,7 +29,6 @@ jobs:
         echo "branch coverage $COV_PERCENT should be greater then $COV_PERCENT_MIN"
         node -e "process.exit($COV_PERCENT > $COV_PERCENT_MIN ? 0 : 1)"
   semgrep:
-    name: semgrep
     runs-on: ubuntu-latest
     container: returntocorp/semgrep:latest
     permissions:
