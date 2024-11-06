@@ -13,10 +13,9 @@
     "mr": "mr.js"
   },
   "scripts": {
-    "version": "",
-    "preversion": "npm run test",
     "pretest": "npx eslint .",
-    "test": "node --test --experimental-test-coverage tests/*.js"
+    "test": "node --test --experimental-test-coverage tests/*.js",
+    "semgrep": "docker run --rm -v \"$PWD:/src\" returntocorp/semgrep:latest semgrep --strict --metrics off --dataflow-traces --config p/default /src"
   },
   "repository": {
     "type": "git",

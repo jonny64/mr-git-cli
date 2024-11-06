@@ -32,3 +32,17 @@ jobs:
         COV_PERCENT=$(npm test | grep 'all' | cut -d'|' -f3) # all files branch cov
         echo "branch coverage $COV_PERCENT should be greater then $COV_PERCENT_MIN"
         node -e "process.exit($COV_PERCENT > $COV_PERCENT_MIN ? 0 : 1)"
+  semgrep:
+    name: semgrep
+    runs-on: ubuntu-latest
+    container: returntocorp/semgrep:latest
+    permissions:
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: semgrep ci
+        run: semgrep ci
+          --config p/default
+          --metrics=off
+          --no-git-ignore
+          --no-suppress-errors
