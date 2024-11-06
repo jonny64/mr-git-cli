@@ -24,7 +24,7 @@ jobs:
           git config --global user.name "GitHub Actions"
       - run: npm ci
       - run: npm version patch
-      - run: npm publish --dry-run --provenance --access public
+      - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - run: git push origin --tags
