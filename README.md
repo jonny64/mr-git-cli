@@ -1,3 +1,5 @@
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/9772/badge)](https://www.bestpractices.dev/projects/9772)
+
 `mr` groups common `git` commands into batches; let's see it in action:
 ```
 $ mr TASK-4242
