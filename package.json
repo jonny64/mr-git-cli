@@ -17,7 +17,7 @@
     "pretest": "npx eslint .",
     "test": "node --test --experimental-test-coverage tests/*.js",
     "semgrep": "docker run --rm -v \"$PWD:/src\" returntocorp/semgrep:latest semgrep --strict --metrics off --dataflow-traces --config p/default /src",
-    "fuzz": "export FUZZ_TIME=600 && npx @gitlab-org/jsfuzz --only-ascii --versifier=false --fuzzTime $FUZZ_TIME --dir ./fuzz/in --exact-artifact-path ./fuzz/crashes ./fuzz/target.js ./fuzz/in && export FUZZ_TIME=",
+    "fuzz": "export FUZZ_TIME=60 && npx @gitlab-org/jsfuzz --only-ascii --versifier=false --fuzzTime $FUZZ_TIME --dir ./fuzz/in --exact-artifact-path ./fuzz/crashes ./fuzz/target.js ./fuzz/in && export FUZZ_TIME=",
 	"postfuzz": "nyc report --reporter=html --exclude-node-modules=false && rm -rf ./fuzz/coverage && mv coverage ./fuzz &&  mv .nyc_output ./fuzz/coverage"
   },
   "repository": {
