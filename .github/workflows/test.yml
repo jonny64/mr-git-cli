@@ -47,3 +47,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm audit
+  fuzz:
+    runs-on: ubuntu-latest
+    container: node:18
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run fuzz
