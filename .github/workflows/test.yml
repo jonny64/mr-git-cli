@@ -54,3 +54,9 @@ jobs:
       - uses: actions/checkout@v4
       - run: npm ci
       - run: npm run fuzz
+      - name: upload fuzz/in fuzz/crashes
+        uses: actions/upload-artifact@v3
+        with:
+          name: fuzz
+          path: fuzz
+          retention-days: 30
