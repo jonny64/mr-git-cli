@@ -9,9 +9,8 @@ const fuzz = async function (buf) {
 	const splitIndex = 7
 	const branch = s.slice(0, splitIndex)
 	const release = s.slice(splitIndex, splitIndex * 2)
-	const fuzz_load = s.slice(splitIndex * 2)
-	global.FUZZ_USER_REPLY = fuzz_load
-	global.FUZZ_SHELL_REPLY = fuzz_load
+	global.FUZZ_USER_REPLY = s.slice(splitIndex * 2, splitIndex * 2 + 1)
+	global.FUZZ_SHELL_REPLY = s.slice(splitIndex * 2 + 1)
 	global.FUZZ = 1
 	try {
 		await main ([branch, 'to', release])
