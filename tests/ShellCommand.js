@@ -25,10 +25,16 @@ describe('random input', () => {
 	})
 
 	it ('git status fuzz', async (t) => {
-		assert.strictEqual(await (new ShellCommand ({cmd: 'git status', isFuzz: true}).run ()), '')
+		global.FUZZ = 1
+		global.FUZZ_SHELL_REPLY = 'fake ok'
+		assert.strictEqual(await (new ShellCommand ({cmd: 'git status'}).run ()), 'fake ok')
+		global.FUZZ = 0
 	})
 
 	it ('git status silent fuzz', async (t) => {
-		assert.strictEqual(await (new ShellCommand ({cmd: 'git status', isFuzz: true}).runSilent ()), '')
+		global.FUZZ = 1
+		global.FUZZ_SHELL_REPLY = 'fake ok'
+		assert.strictEqual(await (new ShellCommand ({cmd: 'git status'}).runSilent ()), 'fake ok')
+		global.FUZZ = 0
 	})
 })

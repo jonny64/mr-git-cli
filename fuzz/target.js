@@ -10,8 +10,9 @@ const fuzz = async function (buf) {
 	const branch = s.slice(0, splitIndex)
 	const release = s.slice(splitIndex, splitIndex * 2)
 	const fuzz_load = s.slice(splitIndex * 2)
-	global.FUZZ_LOAD_ASK = fuzz_load
-	global.FUZZ_LOAD = fuzz_load
+	global.FUZZ_USER_REPLY = fuzz_load
+	global.FUZZ_SHELL_REPLY = fuzz_load
+	global.FUZZ = 1
 	try {
 		await main ([branch, 'to', release])
 	} catch (x) {
