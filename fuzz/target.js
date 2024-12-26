@@ -1,3 +1,4 @@
+global.FUZZ = 1
 const {main} = require('../mr')
 
 const rp_valid = [
@@ -11,7 +12,6 @@ const fuzz = async function (buf) {
 	const release = s.slice(splitIndex, splitIndex * 2)
 	global.FUZZ_USER_REPLY = s.slice(splitIndex * 2, splitIndex * 2 + 1)
 	global.FUZZ_SHELL_REPLY = s.slice(splitIndex * 2 + 1)
-	global.FUZZ = 1
 	try {
 		await main ([branch, 'to', release])
 	} catch (x) {

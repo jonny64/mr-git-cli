@@ -20,6 +20,11 @@ module.exports = {
 
 // eslint-disable-next-line no-floating-promise/no-floating-promise
 ; (async () => {
+
+	if (global.FUZZ) {
+		return
+	}
+
 	try {
 		await main (process.argv.slice (2))
 	} catch (x) {
