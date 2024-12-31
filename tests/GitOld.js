@@ -65,4 +65,16 @@ describe('git old', () => {
 			{todo: toBe, version}
 		)
 	})
+
+	it ('switch new git', async (t) => {
+		const asIs = [
+			'git fetch',
+			'git switch --guess --merge TASK-42'
+		]
+		const version = '2.24.1'
+		assert.deepStrictEqual(
+			await gitOld.translate  ({todo: asIs, version}),
+			{todo: asIs, version}
+		)
+	})
 })

@@ -51,8 +51,7 @@ describe('random input', () => {
 
 	it ('push on empty arguments', async (t) => {
 		const parsedArgs = new ParsedArgs ([])
-		const commands = {Push: new Push ({gitRepo, parsedArgs})}
-		const todo = await new MrCommand ({parsedArgs, gitRepo, commands, gitOld}).todo()
+		const todo = await MrCommand.withParsedArgs (parsedArgs).todo()
 		assert.deepStrictEqual(todo, {
 			todo: [
 				'git push --set-upstream gitlab TASK-42:TASK-42'

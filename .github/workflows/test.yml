@@ -47,3 +47,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: npm audit
+  fuzz:
+    runs-on: ubuntu-latest
+    container: node:18
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - run: npm run fuzz
+      - name: upload fuzz/in fuzz/crashes
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz
+          path: fuzz
+          retention-days: 30
