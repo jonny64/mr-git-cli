@@ -6,11 +6,11 @@ const GitBranch = require ('../lib/GitBranch')
 const MergeCommand = require ('../lib/MergeCommand')
 const ParsedArgs = require ('../lib/ParsedArgs')
 
-describe('MergeCommand', () => {
-	let f = function () {
+describe('MergeCommand', async () => {
+	let f = async function () {
 		switch (this.cmd) {
 			case "git config mr.master.mergeAfter":
-				return [GitBranch.withName ('test')]
+				return [await GitBranch.withName ('test')]
 			case "git push --set-upstream origin TASK-42:TASK-42":
 			case "git push --set-upstream origin TASK-0:TASK-0":
 			case "git push --set-upstream origin TASK-9:TASK-9":
@@ -48,22 +48,22 @@ describe('MergeCommand', () => {
 		return true
 	})
 	mock.method(GitRepo.prototype, 'countDiffCommits', async function (src, dst) {
-		if (await src.equals (GitBranch.withName ('TASK-0'))) {
+		if (await src.equals (await GitBranch.withName ('TASK-0'))) {
 			return 0
 		}
-		if (await src.equals (GitBranch.withName ('TASK-9'))) {
+		if (await src.equals (await GitBranch.withName ('TASK-9'))) {
 			return 101
 		}
 		return 1
 	})
 
 	mock.method(GitRepo.prototype, 'existInRemote', async function (dst) {
-		return !await dst.equals (GitBranch.withName ('dummy'))
+		return !await dst.equals (await GitBranch.withName ('dummy'))
 	})
 
 	mock.method(GitRepo.prototype, 'toMergeAfter', async function (dst) {
-		if (await dst.equals (GitBranch.withName ('master'))) {
-			return [GitBranch.withName ('test', this)]
+		if (await dst.equals (await GitBranch.withName ('master'))) {
+			return [await GitBranch.withName ('test', this)]
 		}
 		return []
 	})

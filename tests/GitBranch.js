@@ -5,9 +5,9 @@ const GitRepo = require ('../lib/GitRepo')
 const ShellCommand= require ('../lib/ShellCommand')
 const ORIGIN_MASTER = 'origin/master'
 
-describe('git branch print', () => {
-	let task42 = GitBranch.withName ('TASK-42')
-	let task43 = GitBranch.withName ('gh/TASK-42')
+describe('git branch print', async () => {
+	let task42 = await GitBranch.withName ('TASK-42')
+	let task43 = await GitBranch.withName ('gh/TASK-42')
 
 	it ('should print', async (t) => {
 		assert.strictEqual(await task42.print(), 'origin/TASK-42')
