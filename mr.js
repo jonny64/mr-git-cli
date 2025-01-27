@@ -28,7 +28,7 @@ module.exports = {
 	try {
 		await main (process.argv.slice (2))
 	} catch (x) {
-		// console.log (new Error (x).message)
+		console.log (new Error (x).message)
 		return '' + x
 	}
 })()
