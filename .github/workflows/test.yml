@@ -43,13 +43,13 @@ jobs:
           --no-suppress-errors
   npm-audit:
     runs-on: ubuntu-latest
-    container: node:18
+    container: node:22
     steps:
       - uses: actions/checkout@v4
       - run: npm audit
   fuzz:
     runs-on: ubuntu-latest
-    container: node:18
+    container: node:22
     steps:
       - uses: actions/checkout@v4
       - run: npm ci
