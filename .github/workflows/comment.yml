@@ -4,6 +4,10 @@ on:
   issue_comment:
     types: [created]
 
+permissions:
+  contents: write
+  id-token: write
+
 jobs:
   publish_call:
     uses: ./.github/workflows/publish.yml
@@ -14,8 +18,5 @@ jobs:
         ${{ github.event.issue.pull_request }}
         && (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER')
         && contains(github.event.comment.body, '/release')
-    permissions:
-      contents: write
-      id-token: write
     steps:
       - run: echo "publish done"
