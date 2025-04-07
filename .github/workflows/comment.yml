@@ -32,3 +32,5 @@ jobs:
   publish_call:
     needs: comment
     uses: ./.github/workflows/publish.yml
+    secrets:
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
