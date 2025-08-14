@@ -12,7 +12,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: node 18
       uses: actions/setup-node@v4
       with:
@@ -34,7 +34,7 @@ jobs:
     permissions:
       packages: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: semgrep ci
         run: semgrep ci
           --config p/default
@@ -45,13 +45,13 @@ jobs:
     runs-on: ubuntu-latest
     container: node:18
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: npm audit
   fuzz:
     runs-on: ubuntu-latest
     container: node:18
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: npm ci
       - run: npm run fuzz
       - name: upload fuzz/in fuzz/crashes
