@@ -26,4 +26,10 @@ describe('ParsedArgs', () => {
 	it ('deploy current to release', async (t) => {
 		assert.deepStrictEqual(await new ParsedArgs (toArgv (`to release`)).value (), {src: '__CURRENT_BRANCH__', action: 'Merge', dst: 'release'})
 	})
+	it ('help with -h flag', async (t) => {
+		assert.deepStrictEqual(await new ParsedArgs (['-h']).value (), {action: 'Help'})
+	})
+	it ('help with --help flag', async (t) => {
+		assert.deepStrictEqual(await new ParsedArgs (['--help']).value (), {action: 'Help'})
+	})
 })
