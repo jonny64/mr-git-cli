@@ -3,5 +3,6 @@
 	"extends": [
 		"config:recommended"
 	],
-	"ignoreDeps": ["eslint-plugin-sonarjs"]
+	"ignoreDeps": ["eslint-plugin-sonarjs"],
+	"schedule": ["0 12 1 * *"]
 }
