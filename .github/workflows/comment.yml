@@ -13,10 +13,7 @@ permissions:
 jobs:
   comment:
     runs-on: ubuntu-latest
-    if: |
-        ${{ github.event.issue.pull_request }}
-        && (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER')
-        && contains(github.event.comment.body, '/release')
+    if: ${{ github.event.issue.pull_request && (github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'MEMBER') && contains(github.event.comment.body, '/release') }}
     steps:
       - name: Post workflow URL as comment
         uses: actions/github-script@v7
