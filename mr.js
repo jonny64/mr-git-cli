@@ -4,7 +4,7 @@ const MrCommand = require('./lib/MrCommand')
 const RunCommand = require('./lib/RunCommand')
 
 const main = async (argv) => {
-	// @todo #0:1h add help --version with usage examples
+	// @todo #0:1h check minimal node version and exit if too old
 	await new RunCommand (
 		await MrCommand.withParsedArgs(
 			new ParsedArgs (
