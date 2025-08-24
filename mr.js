@@ -4,7 +4,6 @@ const MrCommand = require('./lib/MrCommand')
 const RunCommand = require('./lib/RunCommand')
 
 const main = async (argv) => {
-	// @todo #0:1h check minimal node version and exit if too old
 	await new RunCommand (
 		await MrCommand.withParsedArgs(
 			new ParsedArgs (
@@ -28,7 +27,9 @@ module.exports = {
 	try {
 		await main (process.argv.slice (2))
 	} catch (x) {
-		return '' + x
+		console.error(`Node.js version: ${process.version}`)
+		console.error(x.message.split('\n')[0])
+		process.exit(1)
 	}
 
 })()
