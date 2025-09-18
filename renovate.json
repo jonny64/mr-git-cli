@@ -4,5 +4,8 @@
 		"config:recommended"
 	],
 	"ignoreDeps": ["eslint-plugin-sonarjs"],
+	"patch": {
+		"enabled": false
+	},
 	"schedule": ["* 12 1 * *"]
 }
