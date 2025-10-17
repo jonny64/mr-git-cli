@@ -3,6 +3,7 @@ const {main} = require('../mr')
 
 const rp_valid = [
     "usage:",
+    "Invalid branch name",
 ]
 
 const fuzz = async function (buf) {
