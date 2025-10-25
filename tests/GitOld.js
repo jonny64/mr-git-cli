@@ -96,5 +96,11 @@ describe('git old', () => {
 			assert.strictEqual(GitOld.isVersionAtLeast('3.0.0', '2.23'), true)
 			assert.strictEqual(GitOld.isVersionAtLeast('1.99.0', '2.23'), false)
 		})
+
+		it ('should return true for undefined/null (assume modern git)', (t) => {
+			assert.strictEqual(GitOld.isVersionAtLeast(undefined, '2.23'), true)
+			assert.strictEqual(GitOld.isVersionAtLeast(null, '2.23'), true)
+			assert.strictEqual(GitOld.isVersionAtLeast('', '2.23'), true)
+		})
 	})
 })
