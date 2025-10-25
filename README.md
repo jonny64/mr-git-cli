@@ -5,10 +5,10 @@
 $ mr TASK-4242
 Create new branch 'TASK-4242' from 'origin/main' [Y/n]? y
  > git fetch
- > git switch --guess --merge --create TASK-4444 origin/main
-Switched to a new branch 'TASK-4444'
+ > git switch --guess --merge --create TASK-4242 origin/main
+Switched to a new branch 'TASK-4242'
 $ mr main
- > git switch --merge --guess release
+ > git switch --merge --guess main
 $ mr TASK-4242
  > git switch --merge --guess TASK-4242
 
@@ -32,4 +32,4 @@ $ mr TASK-4242 to main
 > npm test
 > git push
 ```
-see https://github.com/jonny64/mr-git-cli/wiki for details
+See https://github.com/jonny64/mr-git-cli/wiki for details
