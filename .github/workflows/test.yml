@@ -17,6 +17,7 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: 18
+    - run: npm cache clean --force
     - run: npm ci
     - run: npm test
     # @todo #0:1h use --test-coverage-exclude to exclude tests from cov
