@@ -3,6 +3,9 @@
   "version": "0.1.12",
   "description": "yet another git flow cli",
   "main": "mr.js",
+  "engines": {
+    "node": ">=18"
+  },
   "publishConfig": {
     "access": "public"
   },
