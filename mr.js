@@ -35,6 +35,10 @@ if (!nodeVersion.isValid()) {
 	try {
 		await main (process.argv.slice (2))
 	} catch (x) {
+		const msg = x.toString().trim()
+		if (msg) {
+			console.error(msg)
+		}
 		process.exit(1)
 	}
 

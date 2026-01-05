@@ -30,7 +30,7 @@ describe('git branch equals', () => {
 })
 
 
-mock.method(ShellCommand.prototype, 'runSilent', function () {
+mock.method(ShellCommand.prototype, 'run', function () {
 	switch (this.cmd) {
 		case 'git log --reverse --pretty=format:%s origin/master..TASK-42':
 			return 'TASK-42 commit msg'

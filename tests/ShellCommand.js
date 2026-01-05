@@ -3,7 +3,7 @@ const assert = require ('assert')
 const ShellCommand = require ('../lib/ShellCommand')
 
 
-describe('random input', () => {
+describe('ShellCommand', () => {
 
 	const makeSpawnMock = (o = {}) => {
 
@@ -25,8 +25,8 @@ describe('random input', () => {
 				},
 			},
 			on: (event, callback) => {
-				if (event === 'exit') {
-					return callback(o.exit)
+				if (event === 'close') {
+					return callback(o.close)
 				}
 			},
 		})
@@ -43,26 +43,19 @@ describe('random input', () => {
 	})
 
 	it ('exec ok', async (t) => {
-		const spawn = makeSpawnMock ({stdout: '', stderr: '', exit: 0})
-		assert.strictEqual(await (new ShellCommand ({cmd: 'git fetch', spawn}).runSilent ()), '')
+		const spawn = makeSpawnMock ({stdout: '', stderr: '', close: 0})
+		assert.strictEqual(await (new ShellCommand ({cmd: 'git fetch', spawn}).run ()), '')
 	})
 
 	it ('exec fail', async (t) => {
-		const spawn = makeSpawnMock ({stdout: '', stderr: 'not a repo', exit: -127})
-		assert.rejects(new ShellCommand ({cmd: 'git fetch', spawn}).runSilent (), {message: 'not a repo'})
+		const spawn = makeSpawnMock ({stdout: '', stderr: 'not a repo', close: -127})
+		assert.rejects(new ShellCommand ({cmd: 'git fetch', spawn}).run (), {message: 'not a repo'})
 	})
 
-	it ('git status fuzz', async (t) => {
+	it ('fuzz', async (t) => {
 		global.FUZZ = 1
 		global.FUZZ_SHELL_REPLY = 'fake ok'
 		assert.strictEqual(await (new ShellCommand ({cmd: 'git status'}).run ()), 'fake ok')
-		global.FUZZ = 0
-	})
-
-	it ('git status silent fuzz', async (t) => {
-		global.FUZZ = 1
-		global.FUZZ_SHELL_REPLY = 'fake ok'
-		assert.strictEqual(await (new ShellCommand ({cmd: 'git status'}).runSilent ()), 'fake ok')
 		global.FUZZ = 0
 	})
 })
