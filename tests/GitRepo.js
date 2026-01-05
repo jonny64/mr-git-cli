@@ -6,7 +6,7 @@ const GitRepo = require ('../lib/GitRepo')
 
 
 describe('random input', () => {
-	mock.method(ShellCommand.prototype, 'runSilent', function () {
+	mock.method(ShellCommand.prototype, 'run', function () {
 		switch (this.cmd) {
 			case 'git log --oneline origin/main..origin/main':
 				return ''

@@ -1,6 +1,7 @@
 const {describe, it, mock} = require ('node:test')
 const assert = require ('assert')
 const ShellCommand = require ('../lib/ShellCommand')
+const ShellCommandLogged = require ('../lib/ShellCommandLogged')
 const GitRepo = require ('../lib/GitRepo')
 const GitBranch = require ('../lib/GitBranch')
 const GitOld = require ('../lib/GitOld')
@@ -28,7 +29,7 @@ describe('random input', () => {
 
 	}
 	mock.method(ShellCommand.prototype, 'run', f)
-	mock.method(ShellCommand.prototype, 'runSilent', f)
+	mock.method(ShellCommandLogged.prototype, 'run', f)
 
 	mock.method(GitBranch.prototype, 'isOriginGitlab', function () {
 		return false
